@@ -22,6 +22,8 @@ void clear_row(size_t row) {
     for (size_t col = 0; col < NUM_COLS; col++) {
         buffer[col + NUM_COLS * row] = empty;
     }
+    col = 0;
+    row = 0;
 }
 
 void print_clear() {
@@ -48,7 +50,7 @@ void print_newline() {
     clear_row(NUM_COLS - 1);
 }
 
-void print_char(char character) {
+void print_char(char character, size_t coloffset, size_t rowoffset) {
     if (character == '\n') {
         print_newline();
         return;
@@ -58,7 +60,7 @@ void print_char(char character) {
         print_newline();
     }
 
-    buffer[col + NUM_COLS * row] = (struct Char) {
+    buffer[(col + coloffset) + NUM_COLS * (row + rowoffset)] = (struct Char) {
         character: (uint8_t) character,
         color: color,
     };
@@ -66,7 +68,7 @@ void print_char(char character) {
     col++;
 }
 
-void print_str(char* str) {
+void print_str(char* str, size_t coloffset, size_t rowoffset) {
     for (size_t i = 0; 1; i++) {
         char character = (uint8_t) str[i];
 
@@ -74,7 +76,7 @@ void print_str(char* str) {
             return;
         }
 
-        print_char(character);
+        print_char(character, coloffset, rowoffset);
     }
 }
 
