@@ -88,13 +88,13 @@ void kernel_main() {
             if (c > 0)
             {
                 if (kbd_US[c] != -1 & kbd_US[c] != -2) {
-                    print_char(kbd_US[c], 1, 1);
-                } else if (kbd_US[c] == -1) {
+                    print_char(kbd_US[c], 0, 0);
+                } else if (kbd_US[c] == -1) {   //the user pressed backspace, so clear the screen.
                     print_clear();
-                } else {
+                } else if (kbd_US[c] == -2) {    // the user pressed the end key
                     break;
                 }
             }
         }
-    }while(c!=1); // 1= ESCAPE
+    }while(kbd_US[c] != -2); // 1= ESCAPE
 }
