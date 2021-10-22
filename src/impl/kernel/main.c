@@ -91,8 +91,6 @@ void kernel_main() {
                     print_char(kbd_US[c], 0, 0);
                 } else if (kbd_US[c] == -1) {   //the user pressed backspace, so clear the screen.
                     print_clear();
-                } else if (kbd_US[c] == -2) {    // the user pressed the end key
-                    break;
                 }
             }
         }
