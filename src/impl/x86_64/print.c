@@ -60,6 +60,10 @@ void print_char(char character, size_t coloffset, size_t rowoffset) {
         print_newline();
     }
 
+    if (character == '\0') {
+        return;
+    }
+
     buffer[(col + coloffset) + NUM_COLS * (row + rowoffset)] = (struct Char) {
         character: (uint8_t) character,
         color: color,

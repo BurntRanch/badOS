@@ -87,7 +87,7 @@ void kernel_main() {
             c = inb(0x60);
             if (c > 0)
             {
-                if (kbd_US[c] != -1 & kbd_US[c] != -2) {
+                if (kbd_US[c] != -1 & kbd_US[c] != -2) {    // the user did not press end/backspace so print the character
                     print_char(kbd_US[c], 0, 0);
                 } else if (kbd_US[c] == -1) {   //the user pressed backspace, so clear the screen.
                     print_clear();
