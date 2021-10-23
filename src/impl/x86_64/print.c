@@ -30,6 +30,8 @@ void print_clear() {
     for (size_t i = 0; i < NUM_ROWS; i++) {
         clear_row(i);
     }
+    col = 0;
+    row = 0;
 }
 
 void print_newline() {
@@ -60,16 +62,16 @@ void print_char(char character, size_t coloffset, size_t rowoffset) {
         print_newline();
     }
 
-    if (character == '\0') {
+    if (character <= 0) {
         return;
     }
 
-    buffer[(col + coloffset) + NUM_COLS * (row + rowoffset)] = (struct Char) {
+    buffer[(col + coloffset) + (NUM_COLS - coloffset) * (row + rowoffset)] = (struct Char) {
         character: (uint8_t) character,
         color: color,
     };
 
-    col++;
+    col = col + coloffset + 1;
 }
 
 void print_str(char* str, size_t coloffset, size_t rowoffset) {
