@@ -82,6 +82,10 @@ char kbd_US [128] =
 
 void kernel_main() {
   char c = 0;
+  size_t length = 0;
+  char haha [5] = {
+    '.', '.', '.', '.', '.'
+  };
   do
   {
     if (inb(0x60) != c) //PORT FROM WHICH WE READ
@@ -95,6 +99,7 @@ void kernel_main() {
           } else {
             print_char(kbd_US[c], 0, 0);
           }
+          haha[length] = kbd_US[c];
         } else if (kbd_US[c] == -1) {   //the user pressed backspace, so clear the screen.
           print_clear();
         } else if (kbd_US[c] == -3) {
@@ -107,4 +112,7 @@ void kernel_main() {
       }
     }
   }while(kbd_US[c] != -2); // 1= ESCAPE
+  for (size_t len = 0; len < 5; len++) {
+    print_char(haha[len], 0, 0);
+  }
 }
