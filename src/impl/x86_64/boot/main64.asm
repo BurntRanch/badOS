@@ -4,6 +4,7 @@ extern kernel_main
 section .text
 bits 64
 long_mode_start:
+    ; move 0 to alot of stuff
     mov ax, 0
     mov ss, ax
     mov ds, ax
@@ -11,5 +12,5 @@ long_mode_start:
     mov fs, ax
     mov gs, ax
 
-	call kernel_main
+	call kernel_main    ; call the C application
 	hlt

@@ -6,15 +6,15 @@ bits 32
 start:
 	mov esp, stack_top
 
-	call check_multiboot
-	call check_cpuid
-	call check_long_mode
+	call check_multiboot	; check if multiboot is supported
+	call check_cpuid	; check if cpuid is supported
+	call check_long_mode	; check if long mode is supported
 
-	call setup_page_tables
-	call enable_paging
+	call setup_page_tables	; set up page tables
+	call enable_paging	; enable paging
 
-	lgdt [gdt64.pointer]
-	jmp gdt64.code_segment:long_mode_start
+	lgdt [gdt64.pointer]	; idk
+	jmp gdt64.code_segment:long_mode_start	; start transition to 64 bit
 
 check_multiboot:
 	cmp eax, 0x36d76289
