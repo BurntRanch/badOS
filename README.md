@@ -1,6 +1,8 @@
 # badOS
 my OS that does nothing but print.
 
+Note: dont type too fast, in the moment typing is scuffed as hell.
+
 
 BUILD INSTRUCTIONS
 
