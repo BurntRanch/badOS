@@ -1,1 +1,1 @@
-char* process(char* command);
+char process(char* command);

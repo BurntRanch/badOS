@@ -1,5 +1,5 @@
 #include "print.h"
-#include "graphics.h"
+#include "proccessCommand.h"
 #define INT_DISABLE 0
 #define INT_ENABLE  0x200
 #define PIC1 0x20
@@ -86,7 +86,7 @@ char capital_kbd_US [128] =
   '\t', /* <-- Tab */
   'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '{', '}', '\n',
   0, /* <-- control key */
-  'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ':', '"', '~',  0, '|', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', '<', '>', '?', -4,
+  'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ':', '"', '~',  0, '|', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', '<', '>', '?', -5,
   '*',
   0,  /* Alt */
   ' ',  /* Space bar */
@@ -116,46 +116,58 @@ char capital_kbd_US [128] =
 };
 
 void kernel_main() {
-  char c = 0;
-  size_t shift = 0;
-  size_t length = 0;
-  char haha [5] = {
-    '.', '.', '.', '.', '.'
-  };
+  unsigned char c = 0;
+  unsigned short port = 0x60;
+  int shift = 0;
+  int length = 0;
+  int doType = 0;
+  char* haha = "";
   do
   {
-    if (inb(0x60) != c) //PORT FROM WHICH WE READ
+    if (inb(port) != c) //PORT FROM WHICH WE READ
     {
-      c = inb(0x60);
-      if (c > 0)
-      {
-        if (kbd_US[c] != -1 & kbd_US[c] != -2 & kbd_US[c] != -3) {    // the user did not press end/backspace/capslock so print the character
-          if (kbd_US[c] >= 97 & kbd_US[c] <= 122 & capslock == 1 & shift != 1) {
-            print_char(capital_kbd_US[c], 0, 0);
-          } else if (shift == 1)  {
-            print_char(capital_kbd_US[c], 0, 0);
-          } else {
-            print_char(kbd_US[c], 0, 0);
-          }
+      c = inb(port);
+      if (kbd_US[c] != -1 & kbd_US[c] != -2 & kbd_US[c] != -3 & doType & kbd_US[c] != '\n') {    // the user did not press end/backspace/capslock so print the character
+        if (kbd_US[c] >= 97 & kbd_US[c] <= 122 & capslock == 1 & shift != 1) {
+          print_char(capital_kbd_US[c], 0, 0);
+          haha[length] = capital_kbd_US[c];
+          haha[length + 1] = '\0';
+          length++;
+        } else if (shift == 1)  {
+          print_char(capital_kbd_US[c], 0, 0);
+          haha[length] = capital_kbd_US[c];
+          haha[length + 1] = '\0';
+          length++;
+        } else {
+          print_char(kbd_US[c], 0, 0);
           haha[length] = kbd_US[c];
-        } else if (kbd_US[c] == -1) {   //the user pressed backspace, so clear the screen.
-          print_clear();
-        } else if (kbd_US[c] == -3) {
-          if (capslock == 1) {
-            capslock = 0;
-          } else {
-            capslock = 1;
-          }
+          haha[length + 1] = '\0';
+          length++;
         }
+      } else if (kbd_US[c] == -1) {   //the user pressed backspace, so clear the screen.
+        print_clear();
+      } else if (kbd_US[c] == -3) {
+        if (capslock == 1) {
+          capslock = 0;
+        } else {
+          capslock = 1;
+        }
+      } else if (kbd_US[c] == '\n') {
+        print_char(kbd_US[c], 0, 0);
+        if (process(haha) == 'c') {
+          print_clear();
+        }
+        length = 0;
+        haha = "";
       }
-      shift = 0;
+
+      doType = !doType;
     } else {
       if (kbd_US[c] == -4) {
         shift = 1;
+      } else if (kbd_US[c] == -5) {
+        shift = 0;
       }
     }
   }while(kbd_US[c] != -2); // 1= ESCAPE
-  for (size_t len = 0; len < 5; len++) {
-    print_char(haha[len], 0, 0);
-  }
 }
