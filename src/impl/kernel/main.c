@@ -127,7 +127,7 @@ void kernel_main() {
     if (inb(port) != c) //PORT FROM WHICH WE READ
     {
       c = inb(port);
-      if (kbd_US[c] != -1 & kbd_US[c] != -2 & kbd_US[c] != -3 & doType & kbd_US[c] != '\n') {    // the user did not press end/backspace/capslock so print the character
+      if (kbd_US[c] != -1 & kbd_US[c] != -2 & kbd_US[c] != -3 & c <= 127 & kbd_US[c] != '\n') {    // the user did not press end/backspace/capslock so print the character
         if (kbd_US[c] >= 97 & kbd_US[c] <= 122 & capslock == 1 & shift != 1) {
           print_char(capital_kbd_US[c], 0, 0);
           haha[length] = capital_kbd_US[c];
@@ -146,7 +146,8 @@ void kernel_main() {
         }
       } else if (kbd_US[c] == -1) {   //the user pressed backspace, so clear the screen.
         print_clear();
-      } else if (kbd_US[c] == -3) {
+      }
+      if (kbd_US[c] == -3) {
         if (capslock == 1) {
           capslock = 0;
         } else {

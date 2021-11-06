@@ -1,10 +1,6 @@
 # badOS
 my OS that does nothing but print.
 
-Typing has been patched.
-
-and yes, im aware that pressing shift with capslock may not work, its on its way!
-
 
 BUILD INSTRUCTIONS
 
