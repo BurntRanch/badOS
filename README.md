@@ -1,7 +1,7 @@
 # badOS
 my OS that does nothing but print.
 
-Note: --dont type too fast, in the moment typing is scuffed as hell-- Typing has been patched.
+Typing has been patched.
 
 and yes, im aware that pressing shift with capslock may not work, its on its way!
 
