@@ -117,9 +117,17 @@ char capital_kbd_US [128] =
 };
 
 void kernel_main() {
+  int color = 0;
   for (int x = 0; x < 1024; x++){
     for (int y = 0; y < 768; y++) {
-      putpixel(x, y, 10);
+      if (color == 15) {
+        putpixel(x, y, color);
+        color += 1;
+        color = 0;
+      } else {
+        putpixel(x, y, color);
+        color += 1;
+      }
     }
   }
 }
