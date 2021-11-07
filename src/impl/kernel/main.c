@@ -155,7 +155,7 @@ void kernel_main() {
         }
       } else if (kbd_US[c] == '\n') {
         print_char(kbd_US[c], 0, 0);
-        if (process(haha) == 'c') {
+        if (equality_check(haha, "clr")) {
           print_clear();
         }
         length = 0;

@@ -1,1 +1,1 @@
-char process(char* command);
+char equality_check(char* one, char* two);
