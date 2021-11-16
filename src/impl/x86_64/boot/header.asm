@@ -9,11 +9,6 @@ header_start:
 	; checksum
 	dd 0x100000000 - (0xe85250d6 + 0 + (header_end - header_start))
 
-	dd 0
-	dd 1024
-	dd 768
-	dd 32
-
 	; end tag
 	dw 0
 	dw 0

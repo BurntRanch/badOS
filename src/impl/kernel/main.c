@@ -1,6 +1,5 @@
 #include "print.h"
 #include "proccessCommand.h"
-#include "graphics.h"
 #define INT_DISABLE 0
 #define INT_ENABLE  0x200
 #define PIC1 0x20
@@ -83,15 +82,15 @@ char kbd_US [128] =
 
 char capital_kbd_US [128] =
 {
-  0,  27, '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', -1,   
+  0,  27, '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', -5,   
   '\t', /* <-- Tab */
   'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '{', '}', '\n',
   0, /* <-- control key */
-  'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ':', '"', '~',  0, '|', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', '<', '>', '?', -5,
+  'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ':', '"', '~',  0, '|', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', '<', '>', '?', -8,
   '*',
   0,  /* Alt */
   ' ',  /* Space bar */
-  -3,  /* Caps lock */
+  -7,  /* Caps lock */
   0,  /* 59 - F1 key ... > */
   0,   0,   0,   0,   0,   0,   0,   0,
   0,  /* < ... F10 */
@@ -105,7 +104,7 @@ char capital_kbd_US [128] =
   0,
   0,  /* Right Arrow */
   '+',
-  -2,  /* 79 - End key*/
+  -6,  /* 79 - End key*/
   0,  /* Down Arrow */
   0,  /* Page Down */
   0,  /* Insert Key */
@@ -117,17 +116,57 @@ char capital_kbd_US [128] =
 };
 
 void kernel_main() {
-  int color = 0;
-  for (int x = 0; x < 1024; x++){
-    for (int y = 0; y < 768; y++) {
-      if (color == 15) {
-        putpixel(x, y, color);
-        color += 1;
-        color = 0;
-      } else {
-        putpixel(x, y, color);
-        color += 1;
+  unsigned char c = 0;
+  unsigned short port = 0x60;
+  int shift = 0;
+  int length = 0;
+  char* haha = "";
+  do
+  {
+    if (inb(port) != c) //PORT FROM WHICH WE READ
+    {
+      c = inb(port);
+      if (kbd_US[c] != -1 & kbd_US[c] != -2 & kbd_US[c] != -3 & c <= 127 & kbd_US[c] != '\n') {    // the user did not press end/backspace/capslock so print the character
+        if (kbd_US[c] >= 97 & kbd_US[c] <= 122 & capslock == 1 & shift != 1) {
+          print_char(capital_kbd_US[c], 0, 0);
+          haha[length] = capital_kbd_US[c];
+          haha[length + 1] = '\0';
+          length++;
+        } else if (shift == 1)  {
+          print_char(capital_kbd_US[c], 0, 0);
+          haha[length] = capital_kbd_US[c];
+          haha[length + 1] = '\0';
+          length++;
+        } else {
+          print_char(kbd_US[c], 0, 0);
+          haha[length] = kbd_US[c];
+          haha[length + 1] = '\0';
+          length++;
+        }
+      } else if (kbd_US[c] == -1) {   //the user pressed backspace, so clear the screen.
+        print_clear();
+        haha[length] = '\0';
+        length--;
+        print_str(haha, 0, 0);
+      }
+      if (kbd_US[c] == -3) {
+        if (capslock == 1) {
+          capslock = 0;
+        } else {
+          capslock = 1;
+        }
+      } else if (kbd_US[c] == '\n') {
+        print_char(kbd_US[c], 0, 0);
+        length = 0;
+        haha = "";
+      }
+
+    } else {
+      if (kbd_US[c] == -4) {
+        shift = 1;
+      } else if (kbd_US[c] == -5) {
+        shift = 0;
       }
     }
-  }
+  }while(kbd_US[c] != -2); // 1= ESCAPE
 }
