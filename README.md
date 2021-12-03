@@ -1,6 +1,7 @@
 # badOS
 my OS that does nothing but print.
 
+P.S. sorry for the long break, i will be pushing an update ASAP, im just having some difficulities.
 
 BUILD INSTRUCTIONS
 
