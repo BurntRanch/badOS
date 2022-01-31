@@ -1,7 +1,7 @@
 # badOS
 my OS that does nothing but print.
 
-P.S. sorry for the long break, i will be pushing an update ASAP, im just having some difficulities.
+Update: This will be archived as i have no plans for it, Consider this just a notepad.
 
 BUILD INSTRUCTIONS
 
