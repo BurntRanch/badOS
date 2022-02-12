@@ -1,7 +1,7 @@
 # badOS
 my OS that does nothing but print.
 
-Update: This will be archived as i have no plans for it, Consider this just a notepad.
+Update: It is time for my return, i have rewritten my code and got access to VGA functions, expect a complete rewrite!
 
 BUILD INSTRUCTIONS
 
