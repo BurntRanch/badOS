@@ -145,7 +145,7 @@ void render(char *bitmap) {
     int mask;
     for (int x=0; x < 8; x++) {
         for (int y=0; y < 8; y++) {
-            set = (((int)bitmap[x]) & 1 << y);  // returns 0 no matter what.
+            set = (bitmap[x] & 1 << y);  // returns 0 no matter what.
             setpixel(y, x, set ? 0 : 15);
         }
     }
