@@ -6,6 +6,7 @@ Update: It is time for my return, i have rewritten my code and got access to VGA
 BUILD INSTRUCTIONS
 
 Usually there is an ISO file in /dist/x86_64, but if you made changes and would like to compile them, then do the following depending on your branch:
+
 Main branch:
      1. Install docker
      2. Build an image for our build-environment:
