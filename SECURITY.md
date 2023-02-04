@@ -11,4 +11,4 @@ currently being supported with security updates.
 
 ## Reporting a Vulnerability
 
-hmu on reddit "hellournoob"
+Inform me on reddit "BurntRanch1"
