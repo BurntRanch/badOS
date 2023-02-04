@@ -1,8 +1,6 @@
 # badOS
 my OS that does nothing but print.
 
-Update: It is time for my return, i have rewritten my code and got access to VGA functions, expect a complete rewrite!
-
 BUILD INSTRUCTIONS
 
 Usually there is an ISO file in /dist/x86_64, but if you made changes and would like to compile them, then do the following:
