@@ -4,7 +4,7 @@ extern kernel_main
 section .text
 bits 64
 long_mode_start:
-    ; move 0 to alot of stuff
+    ; Clear all the following registers.
     mov ax, 0
     mov ss, ax
     mov ds, ax
