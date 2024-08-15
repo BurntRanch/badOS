@@ -10,10 +10,10 @@ start:
 	call check_cpuid	; check if cpuid is supported
 	call check_long_mode	; check if long mode is supported
 
-	call setup_page_tables	; set up page tables
-	call enable_paging	; enable paging
+	call setup_page_tables
+	call enable_paging
 
-	lgdt [gdt64.pointer]	; idk
+	lgdt [gdt64.pointer]	; Load the GDT Table
 	jmp gdt64.code_segment:long_mode_start	; start transition to 64 bit
 
 check_multiboot:
